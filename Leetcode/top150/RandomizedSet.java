@@ -70,4 +70,31 @@ public class RandomizedSet {
 
     }
 
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int t=0;
+        for (int i = 0; i < gas.length; i++) {
+            t+=gas[i];
+            t-=cost[i];
+        }
+        if(t<0) return -1;
+        int ans=-1,tank=0;
+        for (int i = 0; i < gas.length; i++) {
+            if(tank<=0 && gas[i]>cost[i])
+            {
+                tank=0;
+                tank+=gas[i]-cost[i];
+                ans=i;
+            }
+            else
+            {
+                tank+=gas[i]-cost[i];
+            }
+        }
+        return ans;
+    }
+
+    public int candy(int[] ratings) {
+        return 0;
+    }
+
 }
