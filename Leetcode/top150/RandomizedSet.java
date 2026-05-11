@@ -21,9 +21,9 @@ public class RandomizedSet {
     public boolean remove(int val) {
         if(!map.containsKey(val)) return false;
         int index = map.get(val);
-        int newVal = list.getLast();
+        int newVal = 0;
         list.set(index, newVal);
-        list.removeLast();
+        list.remove(list.size()-1);
         map.remove(val);
         map.replace(newVal, index);
         return true;
@@ -94,7 +94,139 @@ public class RandomizedSet {
     }
 
     public int candy(int[] ratings) {
-        return 0;
+        int ans=0;
+        int candy[] = new int[ratings.length];
+        candy[0]=1;
+        for (int i = 1; i < ratings.length; i++) {
+            candy[i] = 1;
+            if(ratings[i]>ratings[i-1])
+                {
+                candy[i]=candy[i-1]+1;
+                }
+        }
+        for (int i = ratings.length-2; i > 0; i++) {
+            if (ratings[i]>ratings[i+1]) {
+                ans+=Math.max(candy[i],candy[i+1]+1);
+            }
+            else  {
+                ans+=candy[i];
+            }
+        }
+        return ans;
+    }
+
+    public int trap(int[] height) {
+        int ans=0;
+////        int prefixMax[] = new int[height.length];
+//        int suffixMax[] = new int[height.length];
+////        prefixMax[0]=height[0];
+//        suffixMax[height.length-1]=height[height.length-1];
+////        for (int i = 1; i < height.length; i++) {
+////            prefixMax[i]=Math.max(prefixMax[i-1],height[i]);
+////        }
+//        for(int i = height.length-2; i > 0; i--) {
+//            suffixMax[i]=Math.max(suffixMax[i+1],height[i]);
+//        }
+//        int prefixMax = height[0];
+//        for (int i = 0; i <height.length; i++) {
+//            int water=Math.min(prefixMax,suffixMax[i])-height[i];
+//            if(water>0 && prefixMax>height[i] && suffixMax[i]>height[i])
+//                ans+=water;
+//            prefixMax=Math.max(prefixMax,height[i]);
+//        }
+//        return ans;
+        int l=0,r=height.length-1;
+        int lMax=0,rMax=0;
+        while (l<r)
+        {
+            if(height[l]<=height[r])
+            {
+                if(lMax>height[l])
+                {
+                    ans+=lMax-height[l];
+
+                }lMax=Math.max(lMax,height[l]);
+                l++;
+            }
+            else
+            {
+                if(rMax>height[r])
+                {
+                    ans+=rMax-height[r];
+
+                }rMax=Math.max(rMax,height[r]);
+                r--;
+            }
+        }
+        return ans;
+    }
+
+    public int romanToInt(String s) {
+        int ans=0;
+        int len=s.length();
+        HashMap<Character,Integer> map=new HashMap<>();
+        map.put('I',1);
+        map.put('V',5);
+        map.put('X',10);
+        map.put('L',50);
+        map.put('C',100);
+        map.put('D',500);
+        map.put('M',1000);
+        int i = 0;
+        while (i<s.length())
+        {
+            if(i+1<len&&map.get(s.charAt(i))<map.get(s.charAt(i+1)))
+            {
+                ans-=map.get(s.charAt(i));
+            }
+            else
+            {
+                ans+=map.get(s.charAt(i));
+            }
+            i++;
+        }
+        return ans;
+    }
+
+    public String intToRoman(int num) {
+        int[] values =    {1000, 900, 500, 400, 100,  90,  50,  40,  10,   9,   5,   4,   1};
+        String[] symbols = {"M", "CM", "D", "CD","C", "XC","L", "XL","X", "IX","V", "IV","I"};
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < values.length; i++) {
+            while (num >= values[i]) {
+                sb.append(symbols[i]);
+                num -= values[i];
+            }
+        }
+        return sb.toString();
+    }
+
+    public String longestCommonPrefix(String[] strs) {
+        if(strs.length==0) return "";
+        StringBuilder sb=new StringBuilder();
+        for (int i = 0; i < strs[0].length(); i++) {
+            for (int j = 0; j < strs.length; j++) {
+                if(i>=strs[j].length() || strs[j].charAt(i)!=strs[0].charAt(i))
+                {
+                    return sb.toString();
+                }
+
+            }
+            sb.append(strs[0].charAt(i));
+        }
+        return sb.toString();
+    }
+
+    public String reverseWords(String s) {
+        StringBuilder  sb=new StringBuilder();
+        s=s.trim();
+        String[] words=s.split("\\s+");
+        for (int i = words.length-1; i >0; i--) {
+            sb.append(words[i]);
+            sb.append(' ');
+        }
+        sb.append(words[0]);
+        return sb.toString();
     }
 
 }
