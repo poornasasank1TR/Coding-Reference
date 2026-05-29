@@ -256,4 +256,67 @@ public class RandomizedSet {
         return ans;
 
     }
+
+//    public boolean check(int[] nums) {
+//        // We need to check if array is increasing or decreasing
+//        // only twice if checking for increasing and only once if checking for decreasing
+//        boolean flag = true;
+//        int noOfChanges =0;
+//        for (int i = 0; i < nums.length; i++) {
+//            if(flag)
+//            {
+//
+//            }
+//        }
+//    }
+
+
+    public boolean isPalindrome(String s) {
+        int l = 0, r = s.length() - 1;
+        while (l < r) {
+            while (l < r && !isValidChar(s.charAt(l))) l++;
+            while (l < r && !isValidChar(s.charAt(r))) r--;
+            if (Character.toLowerCase(s.charAt(l)) != Character.toLowerCase(s.charAt(r))) return false;
+            l++;
+            r--;
+        }
+        return true;
+    }
+
+    public boolean isValidChar(char c) {
+        return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9');
+    }
+
+    public boolean isSubsequence(String s, String t) {
+        int i=0,j=0;
+        while (i<s.length() && j<t.length()) {
+            if (s.charAt(i) == t.charAt(j)) {
+                i++;
+            }
+            j++;
+
+        }
+        return i == s.length();
+    }
+
+    public int[] twoSum(int[] numbers, int target) {
+        int l=0,r=numbers.length-1;
+        while (l<r) {
+            if (numbers[l]+numbers[r]==target) {
+                return new int[]{l+1,r+1};
+            }
+            else if (numbers[l]+numbers[r]>target) {
+                r--;
+            }
+            else {
+                l++;
+            }
+        }
+        return new int[]{-1,-1};
+    }
+
+    public int maxArea(int[] height) {
+        return 0;
+
+    }
 }
